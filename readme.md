@@ -2,7 +2,8 @@ JS.Class
 ========
 
 JS.Class is a class framework based on [JavaScriptMVC $.Class](http://javascriptmvc.com/docs.html#&who=jQuery.Class)
-and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/).
+and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) and can be used
+with NodeJS or other JavaScript engines.
 
 It encourages a hybrid (as made popular by e.g. Scala) approach between functional and object oriented programming.
 
@@ -14,8 +15,8 @@ Features:
 - Callback creation
 
  
- Creating a Class
- ----------------
+Creating a Class
+----------------
  
  The following creates a Monster class, static, and prototype members.
  The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
@@ -60,10 +61,10 @@ Features:
 	
 	dragon.fight();    
 	console.log(dagon.health);	// health = 8
+
 	
-	
- Inheritance
- -----------
+Inheritance
+-----------
  
  When a class is extended, all static and prototype properties are available on the new class.
  If you overwrite a function, you can call the base class's function by calling this._super.
@@ -89,10 +90,10 @@ Features:
 	
 	lochNess.fight();
 	console.log("Loch Ness fought. Health: " + lochNess.health); // -> 11
+
 	
-	
- Callbacks
- ---------
+Callbacks
+---------
  
 Class provides a callback function that returns a callback to a method that will always have this set to the class or instance of the class.
 The following example creates a ResponseHandler class that takes the reponse text and the responses header options as constructor arguments
