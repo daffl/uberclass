@@ -1,6 +1,6 @@
 {
   "name": "JS.Class",
-  "description": "A class framework bridging the gap between functional and Object Oriented programming styles based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.",
+  "description": "A class framework based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.",
   "version": "0.8.0",
   "homepage": "http://github.com/daffl/js.class",
   "repository": {
