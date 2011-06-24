@@ -2,9 +2,7 @@ JS.Class
 ========
 
 JS.Class is a class framework based on [JavaScriptMVC $.Class](http://javascriptmvc.com/docs.html#&who=jQuery.Class)
-and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) and can be used
-with NodeJS or other JavaScript engines.
-
+and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) for NodeJS.
 It encourages a hybrid (as made popular by e.g. Scala) approach between functional and object oriented programming.
 
 Features:
