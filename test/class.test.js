@@ -1,10 +1,10 @@
-var Class = require('../lib/class').Class;
+var Class = require('../lib/class');
 
 /**
  * Tests creating a simple class
  */
 exports.Simple = function (test) {
-	var Animal = Class.extend({}, {
+	Class.extend("Test.Animal", {}, {
 		doSomething : function()
 		{
 			return this.somethingElse() + ' done';	
@@ -16,7 +16,11 @@ exports.Simple = function (test) {
 		}
 	});
 	
-	test.equals(new Animal().doSomething(), 'doing done', "Prototype method call should return this string");
+	var myanimal = new Test.Animal();
+	test.equals(myanimal.doSomething(), 'doing done', "Prototype method call should return this string");
+	test.equals(myanimal.Class.shortName, "Animal", "Testing introspection shortname");
+	test.equals(myanimal.Class.fullName, "Test.Animal", "Testing introspection fullname");
+	test.ok(myanimal.Class.namespace.Animal, "Testing introspection namespace");
 	test.done();
 };
 
@@ -24,7 +28,7 @@ exports.Simple = function (test) {
  * Tests the class constructor and setting of instance properties.
  */
 exports.Constructor = function (test) {
-	var Test = Class.extend({}, {
+	Class.extend("Test.Person", {}, {
 		init : function(age)
 		{
 			this._age = age;
@@ -36,7 +40,7 @@ exports.Constructor = function (test) {
 		}
 	});
 	
-	test.equals(new Test(23).doSomething(), 23, "Instance property should be set properly");
+	test.equals(new Test.Person(23).doSomething(), 23, "Instance property should be set properly");
 	test.done();
 };
 
@@ -44,23 +48,23 @@ exports.Constructor = function (test) {
  * Tests extending an existing class
  */
 exports.Extend = function (test) {
-	var Animal = Class.extend({}, {
+	Class.extend("Test.Mammal", {}, {
 		doSomething : function()
 		{
 			return 'done';	
 		}
 	});
 	
-	test.equals(new Animal().doSomething(), 'done', "Prototype method call should return this string");
+	test.equals(new Test.Mammal().doSomething(), 'done', "Prototype method call should return this string");
 	
-	var Dog = Animal.extend({}, {
+	Test.Mammal.extend("Test.Dog", {}, {
 		doSomething : function()
 		{
 			var oldresult = this._super();
 			return 'bark ' + oldresult;
 		}
 	});
-	test.equals(new Dog().doSomething(), 'bark done', "Extended class should return different string");
+	test.equals(new Test.Dog().doSomething(), 'bark done', "Extended class should return different string");
 	
 	test.done();
 };
@@ -69,7 +73,7 @@ exports.Extend = function (test) {
  * Tests accessing static properties
  */
 exports.Static = function (test) {
-	var Test = Class.extend({
+	Class.extend("Test.Static", {
 		staticProperty : 'test',
 		staticMethod : function()
 		{
@@ -82,8 +86,8 @@ exports.Static = function (test) {
 		}
 	});
 	
-	test.equals(Test.staticProperty, 'test', "Static properties are always accessible");
-	test.equals(new Test().doSomething(), 'test static', "Static properties should be available");
+	test.equals(Test.Static.staticProperty, 'test', "Static properties are always accessible");
+	test.equals(new Test.Static().doSomething(), 'test static', "Static properties should be available");
 	
 	test.done();
 };
@@ -92,7 +96,7 @@ exports.Static = function (test) {
  * Tests the setup() function and currying the return value to the constructor 
  */
 exports.Setup = function (test) {
-	var Test = Class.extend({
+	Class.extend("Test.Setup", {
 	}, {
 		setup : function(arg)
 		{
@@ -105,7 +109,7 @@ exports.Setup = function (test) {
 			this._wrapped = arg;
 		}
 	});
-	test.equals(new Test('test')._wrapped, 'wrapped(test)', "setup() wraps arguments before calling init");
+	test.equals(new Test.Setup('test')._wrapped, 'wrapped(test)', "setup() wraps arguments before calling init");
 	
 	test.done();
 };
@@ -114,7 +118,7 @@ exports.Setup = function (test) {
  * Tests callback creation
  */
 exports.Callback = function (test) {
-	var Test = Class.extend({
+	Class.extend("Test.Callback", {
 	}, {
 		init : function()
 		{
@@ -127,7 +131,7 @@ exports.Callback = function (test) {
 			return this._property + value;
 		}
 	});
-	var tester = new Test();
+	var tester = new Test.Callback();
 	
 	var callback = tester.callback('doSomething');
 	test.equals(callback(), 'local', "Callback wrapped function should have access to object properties");
@@ -145,7 +149,7 @@ exports.Callback = function (test) {
  * Tests nesting of callback
  */
 exports.CallbackNesting = function (test) {
-	var Test = Class.extend({
+	Class.extend("Test.CallbackNested", {
 	}, {
 		processor : function(arg)
 		{
@@ -157,7 +161,7 @@ exports.CallbackNesting = function (test) {
 			return arg + ' done';
 		}
 	});
-	var tester = new Test();
+	var tester = new Test.CallbackNested();
 	var callback = tester.callback(['processor', 'doSomething']);
 	test.equals(callback('first'), 'first processed done', "Calbacks can be chained and get their previous callbacks result");
 	test.done();

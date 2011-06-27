@@ -1,5 +1,14 @@
 var util = require('../lib/util');
 
+exports.getObject = function (test) {
+	var obj = {};
+	util.getObject("My.Test.Object", obj, true);
+	test.ok(obj.My, "First level object created");
+	test.ok(obj.My.Test, "Second level object created");
+	test.ok(obj.My.Test.Object, "Third level object created");
+	test.done();
+};
+
 exports.merge = function (test) {
 	var first = [1, 2];
 	var second = [3, 4, 5];

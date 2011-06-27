@@ -1,6 +1,6 @@
 var Class = require('../lib/class').Class;
 
-var Monster = Class.extend(
+Class.extend('Monster',
 /* @static */
 {
 	count : 0
@@ -41,7 +41,7 @@ console.log("Hydra health: " + hydra.health); // -> 12
 dragon.fight();
 console.log("Dragon health: " + dragon.health); // -> 8
 
-var SeaMonster = Monster.extend(
+Monster.extend('SeaMonster',
 {
 	eat : function(smallChildren)
 	{

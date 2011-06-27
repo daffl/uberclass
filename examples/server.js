@@ -1,6 +1,6 @@
 var cls = require('../lib/class');
 
-var Server = cls.Class.extend({
+cls.extend('Server', {
 	/* Static */
 }, {
 	/* Prototype */
