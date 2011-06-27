@@ -15,6 +15,16 @@ Features:
 -	Callback creation
 
  
+Installation
+------------
+
+You can either use npm
+
+	npm install js-class
+	
+Or clone the [github repository](https://github.com/daffl/JS.Class).
+
+ 
 Creating a Class
 ----------------
  
