@@ -21,7 +21,7 @@ Creating a Class
 The following creates a Monster class, static, and prototype members.
 The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
  
-	var Class = require('class').Class;
+	var Class = require('js-class').Class;
 	
 	Class.extend('Monster',
 	/* @static */
@@ -97,7 +97,7 @@ Namespaces and Introspection
 Namespaces help avoiding naming conflicts with other code and help you add more structure
 to your own:
 
-	$.Class.extend("MyNamespace.MyClass",{},{});
+	Class.extend("MyNamespace.MyClass",{},{});
 	new MyNamespace.MyClass()
 
 Often, it's nice to create classes whose name helps determine functionality.
@@ -105,7 +105,7 @@ JavaScript doesn't have a native way of determining an object's name,
 so the developer must provide a name.
 Class fixes this by taking a String name for the class.
 
-	$.Class.extend("MyOrg.MyClass",{},{})
+	Class.extend("MyOrg.MyClass",{},{})
 	MyOrg.MyClass.shortName //-> 'MyClass'
 	MyOrg.MyClass.fullName //->  'MyOrg.MyClas
 
@@ -154,5 +154,5 @@ the module defining it has been loaded once using require(). I recommend
 using the name of the module as the top level namespace:
 
 	// my_module.js
-	$.Class.extend("MyModule.MyClass",{},{});
+	Class.extend("MyModule.MyClass",{},{});
 
