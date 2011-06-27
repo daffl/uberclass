@@ -6,9 +6,10 @@ and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-ja
 It encourages a hybrid (as made popular by e.g. Scala) approach between functional and object oriented programming.
 
 Features:
-
 - Prototypal inheritance
 - Static inheritance
+- Introspection
+- Namespaces
 - Setup and initialization methods
 - Callback creation
 
@@ -16,13 +17,12 @@ Features:
 Creating a Class
 ----------------
  
- The following creates a Monster class, static, and prototype members.
- The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
- 
+The following creates a Monster class, static, and prototype members.
+The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
  
 	var Class = require('class').Class;
 	
-	var Monster = Class.extend(
+	Class.extend('Monster',
 	/* @static */
 	{
 	  count: 0
@@ -64,12 +64,12 @@ Creating a Class
 Inheritance
 -----------
  
- When a class is extended, all static and prototype properties are available on the new class.
- If you overwrite a function, you can call the base class's function by calling this._super.
- Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children, but more powerful fighters.
+When a class is extended, all static and prototype properties are available on the new class.
+If you overwrite a function, you can call the base class's function by calling this._super.
+Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children, but more powerful fighters.
  
  
-	var SeaMonster = Monster.extend(
+	Monster.extend('SeaMonster',
 	{
 		eat : function(smallChildren)
 		{
@@ -89,16 +89,35 @@ Inheritance
 	lochNess.fight();
 	console.log("Loch Ness fought. Health: " + lochNess.health); // -> 11
 
+
+Namespaces and Introspection
+----------------------------
+
+Namespaces help avoiding naming conflicts with other code and help you add more structure
+to your own:
+
+	$.Class.extend("MyNamespace.MyClass",{},{});
+	new MyNamespace.MyClass()
+
+Often, it's nice to create classes whose name helps determine functionality.
+JavaScript doesn't have a native way of determining an object's name,
+so the developer must provide a name.
+Class fixes this by taking a String name for the class.
+
+	$.Class.extend("MyOrg.MyClass",{},{})
+	MyOrg.MyClass.shortName //-> 'MyClass'
+	MyOrg.MyClass.fullName //->  'MyOrg.MyClas
+
 	
 Callbacks
 ---------
  
 Class provides a callback function that returns a callback to a method that will always have this set to the class or instance of the class.
 The following example creates a ResponseHandler class that takes the reponse text and the responses header options as constructor arguments
-and provides it's handle method as callback to the http.createServer function:
+and provides it's handle method as a callback to the http.createServer function:
  
  
-	var ResponseHandler = Class.extend({
+	Class.extend('Http.Response.Handler', {
 		/* Static */
 	}, {
 		init : function(content, headers)
@@ -120,7 +139,7 @@ and provides it's handle method as callback to the http.createServer function:
 		}
 	});
 	
-	var handler = new ResponseHandler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
+	var handler = new Http.Response.Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
 	
 	var http = require('http');
 	http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");
@@ -129,14 +148,10 @@ and provides it's handle method as callback to the http.createServer function:
 Exporting
 ---------
 
-To export your classes from your module just add the created class to the exports object:
+Classes are added to the global scope, so they are available everywhere as soon as
+the module defining it has been loaded once using require(). I recommend
+using the name of the module as the top level namespace:
 
-
-	// monsters.js
-	var Class = require('class').Class;
-	exports.Monster = Class.extend({ /* Static */ },{ /* Prototype */ });
-	
-	// othermodule.js
-	var Monsters = require('monsters');
-	var hydra = new Monsters.Monster();
+	// my_module.js
+	$.Class.extend("MyModule.MyClass",{},{});
 
