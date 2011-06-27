@@ -1,7 +1,7 @@
 {
-  "name": "JS.Class",
+  "name": "js-class",
   "description": "A class framework based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "homepage": "http://github.com/daffl/js.class",
   "repository": {
     "type": "git",

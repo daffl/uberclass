@@ -6,12 +6,12 @@ and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-ja
 It encourages a hybrid (as made popular by e.g. Scala) approach between functional and object oriented programming.
 
 Features:
-- Prototypal inheritance
-- Static inheritance
-- Introspection
-- Namespaces
-- Setup and initialization methods
-- Callback creation
+	- Prototypal inheritance
+	- Static inheritance
+	- Introspection
+	- Namespaces
+	- Setup and initialization methods
+	- Callback creation
 
  
 Creating a Class

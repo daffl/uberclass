@@ -166,3 +166,11 @@ exports.CallbackNesting = function (test) {
 	test.equals(callback('first'), 'first processed done', "Calbacks can be chained and get their previous callbacks result");
 	test.done();
 };
+
+exports.ClassLoading = function (test) {
+	require('./export_class');
+	test.ok(ExportClass.Dummy, "Class should exist in global namespace");
+	require('./export_class');
+	test.equals(new ExportClass.Dummy().dummy(), 'Dummy', "Loaded class should be available");
+	test.done();
+};
