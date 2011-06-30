@@ -15,14 +15,22 @@ Features:
 -	Callback creation
 
  
-Installation
-------------
+Install and require
+-------------------
 
 You can either use npm
 
 	npm install js-class
 	
 Or clone the [github repository](https://github.com/daffl/JS.Class).
+Loading the base class is done via require. The base Class object is being
+exported as well as an extend convenience method:
+
+	var cls = require('js-class');
+	var Class = cls.Class;
+	Class.extend(name, static, proto);
+	// Or the equivalent
+	cls.extend(name, static, proto);
 
  
 Creating a Class
