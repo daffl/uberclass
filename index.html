@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+
+  <title>daffl/uberclass @ GitHub</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #456470;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #ba9b8f; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #ba9b8f; }
+    h3 { text-align: center; color: #ba9b8f; }
+    a { color: #ba9b8f; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+
+<body>
+  <a href="https://github.com/daffl/uberclass"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="https://github.com/daffl/uberclass/zipball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
+      <a href="https://github.com/daffl/uberclass/tarball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="https://github.com/daffl/uberclass">Uberclass</a>
+      <span class="small">by <a href="https://github.com/daffl">daffl</a></span></h1>
+
+    <div class="description">
+      A JavaScript class framework for NodeJS based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.
+    </div>
+
+    
+      <p>Features:
+-------------------
+
+-	Prototypal inheritance
+-	Static inheritance
+-	Setup and initialization methods
+-	Easy callback creation
+
+ 
+Install and require
+-------------------
+
+You can either use npm
+
+	npm install uberclass
+	
+Or clone the [github repository](https://github.com/daffl/ueberclass).
+
+ 
+Creating a Class
+----------------
+ 
+The following creates a Monster class, static, and prototype members.
+The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
+ 
+	var Class = require('ueberclass');
+	
+	var Monster = Class.extend(/* @static */ {
+	  count: 0
+	},
+	/* @prototype */
+	{
+	  init: function( name ) {
+	
+	    // saves name on the monster instance
+	    this.name = name;
+	
+	    // sets the health
+	    this.health = 10;
+	
+	    // increments count
+	    this.Class.count++;
+	  },
+	  eat: function( smallChildren ){
+	    this.health += smallChildren;
+	  },
+	  fight: function() {
+	    this.health -= 2;
+	  }
+	});
+	
+	hydra = new Monster('hydra');
+	dragon = new Monster('dragon');
+	
+	console.log(hydra.name)		// -> hydra
+	console.log(Monster.count)	// -> 2
+	
+	hydra.eat(2);
+	console.log(hydra.health);	// health = 12
+	
+	dragon.fight();    
+	console.log(dagon.health);	// health = 8
+
+	
+Inheritance
+-----------
+ 
+When a class is extended, all static and prototype properties are available on the new class.
+If you overwrite a function, you can call the base class's function by calling this._super.
+Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children, but more powerful fighters.
+ 
+ 
+	var SeaMonster = Monster.extend({
+		eat : function(smallChildren)
+		{
+			this._super(smallChildren / 2);
+		},
+		fight : function()
+		{
+			this.health -= 1;
+		}
+	});
+	
+	var lochNess = new SeaMonster('Loch Ness');
+	
+	lochNess.eat(4);
+	console.log("Loch Ness ate. Health: " + lochNess.health); // -> 12
+	
+	lochNess.fight();
+	console.log("Loch Ness fought. Health: " + lochNess.health); // -> 11
+
+	
+Callbacks
+---------
+ 
+Class provides a callback function that returns a callback to a method that will always have this set to the class or instance of the class.
+The following example creates a ResponseHandler class that takes the reponse text and the responses header options as constructor arguments
+and provides it's handle method as a callback to the http.createServer function:
+ 
+ 
+	var Handler = Class.extend({
+		init : function(content, headers)
+		{
+			this._headers = headers;
+			this._content = content;
+		},
+		
+		/* Prototype */
+		writeHead : function(response)
+		{
+			response.writeHead(200, this._headers);
+		},
+		
+		handle : function(request, response)
+		{
+			this.writeHead(response);
+			response.end(this._content);
+		}
+	});
+	
+	var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
+	
+	var http = require('http');
+	http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");
+
+
+Exporting
+---------
+
+Just add the class object to your module export:
+
+	// my_module.js
+	module.exports.MyClass = Class.extend({ /* Static */ }, { /* Prototype */ });
+
+</p>
+    
+
+    
+
+    
+
+    
+
+    
+      <h2>Authors</h2>
+      <p>David Luecke (daff@neyeon.de)<br/>      </p>
+    
+
+    
+      <h2>Contact</h2>
+      <p>David Luecke (daff@neyeon.de)<br/>      </p>
+    
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="https://github.com/daffl/uberclass/zipball/master">zip</a> or
+      <a href="https://github.com/daffl/uberclass/tarball/master">tar formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/daffl/uberclass</pre>
+    </p>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="https://github.com/daffl/uberclass">daffl/uberclass</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
