@@ -1,8 +1,6 @@
-var cls = require('../lib/class');
+var Class = require('../lib/class');
 
-cls.extend('Server', {
-	/* Static */
-}, {
+var Server = Class.extend({
 	/* Prototype */
 	init : function(port, listen)
 	{

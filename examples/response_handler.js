@@ -1,8 +1,8 @@
 var Class = require('../lib/class').Class;
 
-Class.extend('Server.Response.Handler', {
-	/* Static */
-}, {
+var Handler = Class.extend(
+/* Prototype */
+{
 	init : function(content, headers)
 	{
 		this._headers = headers;
@@ -22,7 +22,7 @@ Class.extend('Server.Response.Handler', {
 	}
 });
 
-var handler = new Server.Response.Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
+var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
 
 var http = require('http');
 http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");

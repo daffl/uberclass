@@ -1,11 +1,11 @@
 {
-  "name": "js-class",
+  "name": "uberclass",
   "description": "A class framework based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.",
   "version": "1.0.0",
-  "homepage": "http://github.com/daffl/js.class",
+  "homepage": "http://daffl.github.com/uberclass",
   "repository": {
     "type": "git",
-    "url": "git://github.com/daffl/js.class.git"
+    "url": "git://github.com/daffl/uberclass.git"
   },
   "author": "David Luecke <daff@neyeon.de> (http://neyeon.com)",
   "main": "lib/class",

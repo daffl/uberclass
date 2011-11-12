@@ -1,18 +1,16 @@
-JS.Class
+Uberclass
 ========
 
-JS.Class is a class framework based on [JavaScriptMVC $.Class](http://javascriptmvc.com/docs.html#&who=jQuery.Class)
+Uberclass is a class framework based on [JavaScriptMVC $.Class](http://javascriptmvc.com/docs.html#&who=jQuery.Class)
 and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) for NodeJS.
-It encourages a hybrid (as made popular by e.g. Scala) approach between functional and object oriented programming.
+It encourages a hybrid approach between functional and object oriented programming.
 
 Features:
 
 -	Prototypal inheritance
 -	Static inheritance
--	Introspection
--	Namespaces
 -	Setup and initialization methods
--	Callback creation
+-	Easy callback creation
 
  
 Install and require
@@ -20,17 +18,9 @@ Install and require
 
 You can either use npm
 
-	npm install js-class
+	npm install uberclass
 	
-Or clone the [github repository](https://github.com/daffl/JS.Class).
-Loading the base class is done via require. The base Class object is being
-exported as well as an extend convenience method:
-
-	var cls = require('js-class');
-	var Class = cls.Class;
-	Class.extend(name, static, proto);
-	// Or the equivalent
-	cls.extend(name, static, proto);
+Or clone the [github repository](https://github.com/daffl/ueberclass).
 
  
 Creating a Class
@@ -39,11 +29,9 @@ Creating a Class
 The following creates a Monster class, static, and prototype members.
 The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
  
-	var Class = require('js-class').Class;
+	var Class = require('ueberclass');
 	
-	Class.extend('Monster',
-	/* @static */
-	{
+	var Monster = Class.extend(/* @static */ {
 	  count: 0
 	},
 	/* @prototype */
@@ -88,8 +76,7 @@ If you overwrite a function, you can call the base class's function by calling t
 Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children, but more powerful fighters.
  
  
-	Monster.extend('SeaMonster',
-	{
+	var SeaMonster = Monster.extend({
 		eat : function(smallChildren)
 		{
 			this._super(smallChildren / 2);
@@ -108,25 +95,6 @@ Lets create a SeaMonster class. SeaMonsters are less efficient at eating small c
 	lochNess.fight();
 	console.log("Loch Ness fought. Health: " + lochNess.health); // -> 11
 
-
-Namespaces and Introspection
-----------------------------
-
-Namespaces help avoiding naming conflicts with other code and help you add more structure
-to your own:
-
-	Class.extend("MyNamespace.MyClass",{},{});
-	new MyNamespace.MyClass()
-
-Often, it's nice to create classes whose name helps determine functionality.
-JavaScript doesn't have a native way of determining an object's name,
-so the developer must provide a name.
-Class fixes this by taking a String name for the class.
-
-	Class.extend("MyOrg.MyClass",{},{})
-	MyOrg.MyClass.shortName //-> 'MyClass'
-	MyOrg.MyClass.fullName //->  'MyOrg.MyClas
-
 	
 Callbacks
 ---------
@@ -136,9 +104,7 @@ The following example creates a ResponseHandler class that takes the reponse tex
 and provides it's handle method as a callback to the http.createServer function:
  
  
-	Class.extend('Http.Response.Handler', {
-		/* Static */
-	}, {
+	var Handler = Class.extend({
 		init : function(content, headers)
 		{
 			this._headers = headers;
@@ -158,7 +124,7 @@ and provides it's handle method as a callback to the http.createServer function:
 		}
 	});
 	
-	var handler = new Http.Response.Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
+	var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
 	
 	var http = require('http');
 	http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");
@@ -167,10 +133,8 @@ and provides it's handle method as a callback to the http.createServer function:
 Exporting
 ---------
 
-Classes are added to the global scope, so they are available everywhere as soon as
-the module defining it has been loaded once using require(). I recommend
-using the name of the module as the top level namespace:
+Just add the class object to your module export:
 
 	// my_module.js
-	Class.extend("MyModule.MyClass",{},{});
+	module.exports.MyClass = Class.extend({ /* Static */ }, { /* Prototype */ });
 
