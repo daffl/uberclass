@@ -2,7 +2,7 @@
   "name": "uberclass",
   "description": "A class framework based on JavaScriptMVC $.Class and John Resig's Simple JavaScript inheritance.",
   "version": "1.0.0",
-  "homepage": "http://daffl.github.com/uberclass",
+  "homepage": "https://github.com/daffl/uberclass",
   "repository": {
     "type": "git",
     "url": "git://github.com/daffl/uberclass.git"
