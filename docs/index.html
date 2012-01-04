@@ -1,0 +1,131 @@
+<!DOCTYPE html> <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      <title>UberClass</title>   <style>     body {       font-size: 16px;       line-height: 24px;       background: #fff url("bg.png");       color: #252519;       font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;       padding: 0 0 50px 50px;     }     div.container {       width: 720px;       margin: 50px 0 50px 50px;     }     p {       width: 550px;     }       #documentation p {         margin-bottom: 4px;       }     a, a:visited {       padding: 0 2px;       text-decoration: none;       background: #dbe6f3;       color: #3f6fa5;     }     a:active, a:hover {       color: #dbe6f3;       background: #3f6fa5;     }     h1, h2, h3, h4, h5, h6 {       margin-top: 40px;       width: 550px;       line-height: 1.25em;     }     b.header {       font-size: 18px;     }     span.alias {       font-size: 14px;       font-style: italic;       margin-left: 20px;     }     table, tr, td {       margin: 0; padding: 0;     }       td {         padding: 2px 12px 2px 0;       }     ul {       list-style-type: circle;       padding: 0 0 0 20px;     }       li {         width: 500px;         margin-bottom: 10px;       }     code, pre, tt {       font-family: Monaco, Consolas, "Lucida Console", monospace;       font-size: 12px;       line-height: 18px;       color: #555529;     }       pre {         font-size: 12px;         padding: 2px 0 2px 12px;         border-left: 6px solid #aaaa99;         margin: 0px 0 30px;       }            #ribbon {      line-height: 0;     }          #ribbon:hover {      background: none;     }          #ribbon img {      position: fixed;      top: 0;      right: 0;      border: 0;      z-index: 2;     }   </style> </head> <body>      <a id="ribbon" href="https://github.com/daffl/uberclass">    <img src="https://a248.e.akamai.net/assets.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"      alt="Fork me on GitHub"></a>      <h1>UberClass</h1>        <em>Simple JavaScript inheritance for NodeJS</em>         <h3>Source files:</h3>   <ol>            <li><a href="monsters.html">monsters.js</a></li>            <li><a href="response_handler.html">response_handler.js</a></li>            <li><a href="server.html">server.js</a></li>        </ol>      <h1>Uberclass</h1>
+
+<p>Uberclass is a class framework based on <a href="http://javascriptmvc.com/docs.html#&amp;who=jQuery.Class">JavaScriptMVC $.Class</a>
+and <a href="http://ejohn.org/blog/simple-javascript-inheritance/">John Resig's Simple JavaScript inheritance</a> for NodeJS.
+It encourages a hybrid approach between functional and object oriented programming.</p>
+
+<p>Features:</p>
+
+<ul>
+<li>Prototypal inheritance</li>
+<li>Static inheritance</li>
+<li>Setup and initialization methods</li>
+<li>Easy callback creation</li>
+</ul>
+
+<h2>Install and require</h2>
+
+<p>You can either use npm</p>
+
+<pre><code>npm install uberclass</code></pre>
+
+<p>Or clone the <a href="https://github.com/daffl/ueberclass">github repository</a>.</p>
+
+<h2>Creating a Class</h2>
+
+<p>The following creates a Monster class with static, and prototype members.
+The prototype init is called as the constructor. Every time a monster instance is created,
+the static count is incremented:</p>
+
+<pre><code>var Class = require('ueberclass');
+
+var Monster = Class.extend(/* @static */ {
+  count: 0
+},
+/* @prototype */
+{
+  init: function( name ) {
+
+    // saves name on the monster instance
+    this.name = name;
+
+    // sets the health
+    this.health = 10;
+
+    // increments count
+    this.Class.count++;
+  },
+  eat: function( smallChildren ){
+    this.health += smallChildren;
+  },
+  fight: function() {
+    this.health -= 2;
+  }
+});
+
+hydra = new Monster('hydra');
+dragon = new Monster('dragon');
+
+console.log(hydra.name)     // -&gt; hydra
+console.log(Monster.count)  // -&gt; 2
+
+hydra.eat(2);
+console.log(hydra.health);  // health = 12
+
+dragon.fight();    
+console.log(dagon.health);  // health = 8</code></pre>
+
+<h2>Inheritance</h2>
+
+<p>When a class is extended, all static and prototype properties are available on the new class.
+If you overwrite a function, you can call the base class's function by calling this._super.
+Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children,
+but more powerful fighters. </p>
+
+<pre><code>var SeaMonster = Monster.extend({
+    eat : function(smallChildren)
+    {
+        this._super(smallChildren / 2);
+    },
+    fight : function()
+    {
+        this.health -= 1;
+    }
+});
+
+var lochNess = new SeaMonster('Loch Ness');
+
+lochNess.eat(4);
+console.log("Loch Ness ate. Health: " + lochNess.health); // -&gt; 12
+
+lochNess.fight();
+console.log("Loch Ness fought. Health: " + lochNess.health); // -&gt; 11</code></pre>
+
+<h2>Callbacks</h2>
+
+<p>Class provides a proxy function that returns a callback to a method that will always have <em>this</em> set
+to the class or instance of the class. The following example creates a ResponseHandler class that 
+takes the reponse text and the responses header options as constructor arguments and provides
+it's handle method as a callback to the http.createServer function: </p>
+
+<pre><code>var Handler = Class.extend({
+    init : function(content, headers)
+    {
+        this._headers = headers;
+        this._content = content;
+    },
+
+    /* Prototype */
+    writeHead : function(response)
+    {
+        response.writeHead(200, this._headers);
+    },
+
+    handle : function(request, response)
+    {
+        this.writeHead(response);
+        response.end(this._content);
+    }
+});
+
+var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
+
+var http = require('http');
+http.createServer(handler.proxy('handle')).listen(1337, "127.0.0.1");</code></pre>
+
+<h2>Exporting</h2>
+
+<p>Just add the class object to your module export:</p>
+
+<pre><code>// my_module.js
+module.exports.MyClass = Class.extend({ /* Static */ }, { /* Prototype */ });</code></pre> </body> </html>

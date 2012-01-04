@@ -25,4 +25,4 @@ var Handler = Class.extend(
 var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
 
 var http = require('http');
-http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");
+http.createServer(handler.proxy('handle')).listen(1337, "127.0.0.1");

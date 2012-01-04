@@ -1,11 +1,11 @@
 var Class = require('../lib/class').Class;
 
 var Monster = Class.extend(
-/* @static */
+// Static properties
 {
 	count : 0
 },
-/* @prototype */
+// Prototype properties
 {
 	init : function(name)
 	{

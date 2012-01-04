@@ -25,9 +25,10 @@ Or clone the [github repository](https://github.com/daffl/ueberclass).
  
 Creating a Class
 ----------------
- 
-The following creates a Monster class, static, and prototype members.
-The prototype init is called as the constructor. Every time a monster instance is created, the static count is incremented:
+
+The following creates a Monster class with static, and prototype members.
+The prototype init is called as the constructor. Every time a monster instance is created,
+the static count is incremented:
  
 	var Class = require('ueberclass');
 	
@@ -73,8 +74,8 @@ Inheritance
  
 When a class is extended, all static and prototype properties are available on the new class.
 If you overwrite a function, you can call the base class's function by calling this._super.
-Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children, but more powerful fighters.
- 
+Lets create a SeaMonster class. SeaMonsters are less efficient at eating small children,
+but more powerful fighters. 
  
 	var SeaMonster = Monster.extend({
 		eat : function(smallChildren)
@@ -99,10 +100,10 @@ Lets create a SeaMonster class. SeaMonsters are less efficient at eating small c
 Callbacks
 ---------
  
-Class provides a callback function that returns a callback to a method that will always have this set to the class or instance of the class.
-The following example creates a ResponseHandler class that takes the reponse text and the responses header options as constructor arguments
-and provides it's handle method as a callback to the http.createServer function:
- 
+Class provides a proxy function that returns a callback to a method that will always have _this_ set
+to the class or instance of the class. The following example creates a ResponseHandler class that 
+takes the reponse text and the responses header options as constructor arguments and provides
+it's handle method as a callback to the http.createServer function: 
  
 	var Handler = Class.extend({
 		init : function(content, headers)
@@ -127,7 +128,7 @@ and provides it's handle method as a callback to the http.createServer function:
 	var handler = new Handler('Hello World from ResponseHandler\n', { 'Content-Type': 'text/plain' });
 	
 	var http = require('http');
-	http.createServer(handler.callback('handle')).listen(1337, "127.0.0.1");
+	http.createServer(handler.proxy('handle')).listen(1337, "127.0.0.1");
 
 
 Exporting

@@ -11,7 +11,7 @@ var Server = Class.extend({
 	start : function()
 	{
 		var http = require('http');
-		http.createServer(this.callback('handle')).listen(this._port, this._listen);
+		http.createServer(this.proxy('handle')).listen(this._port, this._listen);
 		console.log("Server running at " + this._listen + ":" + this._port);
 	},
 	
