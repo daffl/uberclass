@@ -20,7 +20,7 @@ You can either use npm
 
 	npm install uberclass
 	
-Or clone the [github repository](https://github.com/daffl/ueberclass).
+Or clone the [github repository](https://github.com/daffl/uberclass).
 
  
 Creating a Class
@@ -30,7 +30,7 @@ The following creates a Monster class with static, and prototype members.
 The prototype init is called as the constructor. Every time a monster instance is created,
 the static count is incremented:
  
-	var Class = require('ueberclass');
+	var Class = require('uberclass');
 	
 	var Monster = Class.extend(/* @static */ {
 	  count: 0
