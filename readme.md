@@ -66,7 +66,7 @@ the static count is incremented:
 	console.log(hydra.health);	// health = 12
 	
 	dragon.fight();    
-	console.log(dagon.health);	// health = 8
+	console.log(dragon.health);	// health = 8
 
 	
 Inheritance
