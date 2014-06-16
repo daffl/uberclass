@@ -1,6 +1,8 @@
 Uberclass
 ========
 
+> Note: Uberclass is not being actively maintained anymore. Try [Uberproto](https://github.com/daffl/uberproto) as an alternative which is much smaller and uses ES5 inheritance.
+
 Uberclass is a class framework based on [JavaScriptMVC $.Class](http://javascriptmvc.com/docs.html#&who=jQuery.Class)
 and [John Resig's Simple JavaScript inheritance](http://ejohn.org/blog/simple-javascript-inheritance/) for NodeJS.
 It encourages a hybrid approach between functional and object oriented programming.
